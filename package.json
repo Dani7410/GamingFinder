@@ -4,7 +4,8 @@
   "description": "A Node.js exam project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "cross-env PORT=9090 nodemon.cmd --ext 'js,html,css' app.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,8 @@
   },
   "homepage": "https://github.com/Dani7410/GamingFinder#readme",
   "dependencies": {
+    "bootstrap": "^5.0.1",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1"
   }
 }
