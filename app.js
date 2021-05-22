@@ -1,7 +1,15 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const fs = require("fs");
+// router 
+const dataOpretMongo = require("./routes/MongoAtlastCloud");
+
+// bodyparser andvendes på app
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
+
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -10,8 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')))
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
-
-
 
 
 
