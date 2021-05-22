@@ -1,3 +1,6 @@
+const router = require("express").Router();
+const dotenv = require('dotenv');
+dotenv.config()
 const MongoClient = require('mongodb').MongoClient;
 		
 		
@@ -17,6 +20,8 @@ const MongoClient = require('mongodb').MongoClient;
 		
 		
 			client.close();
-		
-		
+
+            
 			});
+
+            module.exports = {router};
