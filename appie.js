@@ -135,7 +135,7 @@ app.get("/games", (req, res) => {
         .catch((error) => {
           console.log(error);
         });
-    })
+})
 
 // landingpage test endpoint, som pt sender alle game models
 app.get("/users", (req, res) =>{
