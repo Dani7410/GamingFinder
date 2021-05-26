@@ -7,27 +7,16 @@ const User = require("../models/user");
 // prøver at sætte mongoDB op
 
 
-router.get("/user/create", (req, res) => {
-    const user = new User({
-        name: "daniel",
-        accountName: "susan-nator",
-        contactInfo: " discord#4453 - steam#idFiktive",
-        age: "21",
-        email: "email@gmail",
-        gender: "woman",
-        userType: "Member",
-        onlineState: false,
-        mostPlayedGame: "League of legends",
-        recentlyPlayedWith: "søren",
-        friends: "Friends are: søren - bendte",
-    });
+router.post("/user/create", (req, res) => {
+    const user = new User(req.body);
+    
     user.save()
     .then((result) => {
         res.send(result);
-        console.log("user was succesfully created in the database.")
+        console.log(user + " was created")
     })
     .catch((error) => {
-        console.log(error);
+        console.log('Error message',error);
     })
 })
 
@@ -56,6 +45,20 @@ router.delete("/user/:id", async (req,res) => {
 
     }
 })
+
+
+// name: "daniel",
+// accountName: "susan-nator",
+// accountPassword:'123456',
+// contactInfo: " discord#4453 - steam#idFiktive",
+// age: 21,
+// email: "test@gmail",
+// gender: "woman",
+// userType: "Member",
+// onlineState: false,
+// mostPlayedGame: "League of legends",
+// recentlyPlayedWith: "søren",
+// friends: "Friends are: søren - bendte",
 
 
 module.exports = {router};
