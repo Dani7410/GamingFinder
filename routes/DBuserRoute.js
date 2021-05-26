@@ -6,17 +6,17 @@ const User = require("../models/user");
 
 // // kald til oprettelse af user // skal laves om til post med req. body parametre.
  router.post("/createUser", (req, res) => {
- const user = new User(req.body)
-user.save()
-.then((result) => {
-    res.send(result);
-    console.log("user was succesfully created in the database.")
-})
-.catch((error) => {
-    console.log(error);
-})
+    const user = new User(req.body)
+    user.save()
+    .then((result) => {
+        res.send(result);
+        console.log("user was succesfully created in the database.")
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 
-// evt redirect til login.
+    // evt redirect til login.
 })
 
 
