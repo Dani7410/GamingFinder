@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const validator = require("validator")
 
 const userSchema = new Schema({
+
     // by "opening" up the json object we can modify the properties insted of just {name: susan}
     name: {
         type: String,
