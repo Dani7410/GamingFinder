@@ -6,18 +6,18 @@ const userSchema = new Schema({
     // by "opening" up the json object we can modify the properties insted of just {name: susan}
     name: {
         type: String,
-        required: true  // required so wont be able to create/post without this value.
+        required: true,  // required so wont be able to create/post without this value.
     },
     accountName: {
         type: String,
-        trim: true,
+        trim: true
         
     },
     accountPassword:{
         type: String,
         trim: true,
         minlength: 6,
-        maxlength: 10,
+        maxlength: 25,
         validate(value){
             if(validator.equals('password',value)){
                 throw new Error('password cant be ' + value)
