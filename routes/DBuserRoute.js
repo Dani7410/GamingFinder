@@ -12,13 +12,31 @@ router.post("/user/create", (req, res) => {
         res.send(result);
         console.log(user + " was created")
     })
-    .catch((error) => {
-        res.send(400).send(error)
+    .catch((e) => {
+        res.send(400).send(e)
         console.log('Error message');
     })
 })
 
-// landingpage test endpoint, som pt sender alle game models
+router.get('/users/:id', (res,req) =>{
+    const _id = req.params.id
+
+    User.findById(_id).then((user) =>{
+        if(!user) {
+            return res.status(404).send()
+        };
+
+        res.send(user)
+
+    }).catch((e) =>{
+        res.status(500).send()
+    })
+
+    
+    
+})
+
+
 router.get("/users", (req, res) =>{
     User.find()
         .then((result) => {
@@ -28,6 +46,8 @@ router.get("/users", (req, res) =>{
           console.log(error);
         });
 })
+
+
 
 router.delete("/user/:id", async (req,res) => {
     try{
