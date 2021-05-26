@@ -27,9 +27,9 @@ const dbGameRoute = require("./routes/DBgameRoute");
 //App use
 app.use(express.json());
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(dbUserRoute.router);
 app.use(dbGameRoute.router);
 
@@ -39,15 +39,15 @@ app.use(dbGameRoute.router);
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
-const userLanding = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
+const userCreate = fs.readFileSync(__dirname + "/public/userCreate/userCreate.html", "utf-8");
 
 app.get("/", (req, res) => {
-res.send(header + landingpage + footer)
+    res.send(header + landingpage + footer)
 });
 
 
-app.get("/user", (req, res) => {
-    res.send(header + userLanding + footer)
+app.get("/createUser", (req, res) => {
+    res.send(header + userCreate + footer)
 })
 
 
