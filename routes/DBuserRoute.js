@@ -4,19 +4,21 @@ const User = require("../models/user");
 
 
 
-router.post("/user/create", (req, res) => {
-    const user = new User(req.body);
-    
-    user.save()
-    .then((result) => {
-        res.send(result);
-        console.log(user + " was created")
-    })
-    .catch((e) => {
-        res.send(400).send(e)
-        console.log('Error message');
-    })
+// // kald til oprettelse af user // skal laves om til post med req. body parametre.
+ router.post("/createUser", (req, res) => {
+ const user = new User(req.body)
+user.save()
+.then((result) => {
+    res.send(result);
+    console.log("user was succesfully created in the database.")
 })
+.catch((error) => {
+    console.log(error);
+})
+
+// evt redirect til login.
+})
+
 
 router.get('/users/:id', (res,req) =>{
     const _id = req.params.id
