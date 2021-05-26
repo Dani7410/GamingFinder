@@ -9,7 +9,7 @@ const User = require("../models/user");
 
 router.get("/user/create", (req, res) => {
     const user = new User({
-        name: "susan",
+        name: "daniel",
         accountName: "susan-nator",
         contactInfo: " discord#4453 - steam#idFiktive",
         age: "21",
@@ -42,8 +42,19 @@ router.get("/users", (req, res) =>{
         });
 })
 
-router.delete("/games/:id", (req,res) =>{
-    
+router.delete("/user/:id", async (req,res) => {
+    try{
+        const user = await User.findByIdAndDelete(req.params.id)
+
+        if(!user){
+            return res.status(404).send()
+        }
+        res.send(user)
+        console.log("User was deleted");
+    }catch(error){
+        res.status(500).send()
+
+    }
 })
 
 
