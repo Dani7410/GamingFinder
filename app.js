@@ -16,8 +16,8 @@ const dbURI = "mongodb+srv://"+process.env.TESTUSERNAME+":"+process.env.TESTPASS
 // so we can attatch a then method to it, "this action is handled after the connection to the database have been made."
 // we dont want the app to start listening for requests on port 3000 before the connection to the database have been made, and if placed in the then method will connect first then listen.
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => app.listen(3000))
-.catch((err) => console.log(err));
+// .then((result) => app.listen(3000))
+// .catch((err) => console.log(err));
 
 
 //Import with require to get our route

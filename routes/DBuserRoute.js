@@ -3,9 +3,6 @@ const User = require("../models/user");
 
 
 
-// connect to mongoDB
-// prøver at sætte mongoDB op
-
 
 router.post("/user/create", (req, res) => {
     const user = new User(req.body);
@@ -16,7 +13,8 @@ router.post("/user/create", (req, res) => {
         console.log(user + " was created")
     })
     .catch((error) => {
-        console.log('Error message',error);
+        res.send(400).send(error)
+        console.log('Error message');
     })
 })
 

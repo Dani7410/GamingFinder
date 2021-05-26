@@ -16,8 +16,8 @@ const userSchema = new Schema({
     accountPassword:{
         type: String,
         trim: true,
-        minLenght: 6,
-        maxLength: 10,
+        minlength: 6,
+        maxlength: 10,
         validate(value){
             if(validator.equals('password',value)){
                 throw new Error('password cant be ' + value)
