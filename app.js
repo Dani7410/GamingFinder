@@ -37,12 +37,12 @@ app.use(dbGameRoute.router);
 
 // how we use SSR to show the HTML pages
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
-const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8")
-
+const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
+const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
 
 
 app.get("/", (req, res) => {
-res.send(header + footer)
+res.send(header + landingpage + footer)
 });
 
 
@@ -56,4 +56,3 @@ app.listen(PORT, error => {
     }
     console.log("server is running on port:", Number(PORT));
 });
-
