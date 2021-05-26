@@ -39,12 +39,16 @@ app.use(dbGameRoute.router);
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
-
+const userLanding = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 
 app.get("/", (req, res) => {
 res.send(header + landingpage + footer)
 });
 
+
+app.get("/user", (req, res) => {
+    res.send(header + userLanding + footer)
+})
 
 
 
