@@ -23,6 +23,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 //Import with require to get our route
 const dbUserRoute = require("./routes/DBuserRoute");
 const dbGameRoute = require("./routes/DBgameRoute");
+const dbChannelRoute = require("./routes/DBchannelRoute");
 
 //App use
 app.use(express.json());
@@ -32,6 +33,8 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.urlencoded({ extended: true }));
 app.use(dbUserRoute.router);
 app.use(dbGameRoute.router);
+app.use(dbChannelRoute.router);
+
 
 
 

@@ -1,8 +1,32 @@
 const router = require("express").Router();
 const Channel = require("../models/channel");
 
+
+
+// get på channel id.
+router.get("channel/:id", (req, res) =>{
+    const _id = req.params.id
+
+    Channel.findById(_id)
+    .then((result) =>{
+
+        if(!result) {
+            console.log("the channel was not found");
+            return res.sendStatus(404).send("the channel was not found")
+        }
+
+        res.send(result)
+        console.log("the channel was found");
+    }).catch((error) =>{
+        console.log(error)
+        res.status(400).send()
+    })
+})
+
+
+
 // skal laves om til post med req body parametre som oprettelses værdier. evt check fra andet som værdier.
-app.get("/channel/create" , (req, res) =>{
+router.get("/channel/create" , (req, res) =>{
     const channel = new Channel({
         name: "chatChannel",
         minAge: "16",
