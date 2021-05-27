@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Dani7410/GamingFinder#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^5.0.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
