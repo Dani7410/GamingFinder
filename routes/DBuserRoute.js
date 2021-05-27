@@ -26,15 +26,17 @@ router.get('/users/:id', (req, res) =>{
     const _id = req.params.id
 
     User.findById(_id).then((result) =>{
-        console.log('the user was found');
+        
         if(!result) {
-            console.log('doesnt work');
+            console.log('the user was not found');
+            return res.status(404).send('the user was not found')
+            
         }
 
         res.send(result)
-
+        console.log('the user was found');
     }).catch((error) =>{
-        console.log(error);
+        res.status(500).send()
     })    
 })
 
@@ -47,6 +49,14 @@ router.get("/users", (req, res) =>{
         .catch((error) => {
           console.log(error);
         });
+})
+
+router.patch('/users/:id', async (req, res) =>{
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id, )
+    } catch(error){
+
+    }
 })
 
 
