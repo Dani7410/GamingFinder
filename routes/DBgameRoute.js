@@ -2,22 +2,6 @@ const router = require("express").Router();
 const Game = require("../models/game");
 
 
-
-// Api kald til oprettelse af game
-router.post("/game/create", (req, res) => {
-    const game = new Game(req.body)
-    game.save()
-    .then((result) => {
-        res.send(result);
-        console.log("game was succesfully created in the database.")
-    })
-    .catch((error) => {
-        console.log(error)
-        res.send(error);
-    })
-})
-
-
 // mongoose and mongo sandbox routes. " test routes" // skal laves om til post med req. body parametre.
 router.get("/game/create", (req, res) => {
     const game = new Game({
@@ -57,18 +41,17 @@ router.get("/games", (req, res) => {
 
 // Get kald med id parameter
 router.get('/game/:id', (req, res) =>{
-     
+
     const _id = req.params.id
 
     Game.findById(_id)
     .then((result) =>{
         
-        if(!result) {
+        if(!result) 
+        {
             console.log('the game was not found');
             return res.status(404).send('the game was not found')
-            
         }
-
         res.send(result)
         console.log('the game was found');
     }).catch((error) =>{
@@ -77,9 +60,56 @@ router.get('/game/:id', (req, res) =>{
     })    
 })
 
+// Api kald til oprettelse af game
+router.post("/game/create", (req, res) => {
+    const game = new Game(req.body)
+    game.save()
+    .then((result) => {
+        res.send(result);
+        console.log("game was succesfully created in the database.")
+    })
+    .catch((error) => {
+        console.log(error)
+        res.send(error);
+    })
+})
 
+// patch/ update route
+router.patch("/game/update/:id", async (req, res) =>{
+    const updatesData = Object.keys(req.body)
+    const allowedUpdates = ["name", "genre", "minAge", "multiplayer", "playerVsPlayer", "rolePlayingGame", "shooter", "massiveMultiPlayerOnlineRoleplayingGame"]
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
+    if(!isValidOperation){
+        return res.status(400).send({ error: "invalid updates!" })
+    }
+    try{
+        const game = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true})
+    
+        if(!game){
+            return res.status(404).send()
+        }
 
+        res.send(game)
+    } catch(error){
+        res.status(400).send()
+    }
+})
 
+// delete
+router.delete("/game/delete/:id", async (req,res) => {
+    try{
+        const game = await Game.findByIdAndDelete(req.params.id)
+
+        if(!game){
+            return res.status(404).send()
+        }
+        res.send(game)
+        console.log("User was deleted");
+    }catch(error){
+        res.status(500).send()
+
+    }
+})
 
 module.exports = {router}
