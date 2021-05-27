@@ -1,10 +1,10 @@
-const router = require("express").Router();
+const router = require("express").Router({mergeParams: true});
 const User = require("../models/user");
 
 
 
 
-// // kald til oprettelse af user // skal laves om til post med req. body parametre.
+// API  kald til oprettelse af user 
  router.post("/createUser", (req, res) => {
     const user = new User(req.body)
     user.save()
@@ -16,24 +16,25 @@ const User = require("../models/user");
         console.log(error);
     })
 
-    // evt redirect til login.
+    // redirect til login.
 })
 
 
-router.get('/users/:id', (res,req) =>{
-    console.log(req.params)
+router.get('/users/:id', (req, res) =>{
+    // console.log(res.params)
    
     const _id = req.params.id
 
-    User.findById(_id).then((user) =>{
-        if(!user) {
-            return res.status(404).send()
+    User.findById(_id).then((result) =>{
+        console.log('the user was found');
+        if(!result) {
+            console.log('doesnt work');
         }
 
-        res.send(user)
+        res.send(result)
 
-    }).catch((e) =>{
-        res.status(500).send()
+    }).catch((error) =>{
+        console.log(error);
     })    
 })
 
