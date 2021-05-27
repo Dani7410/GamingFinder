@@ -40,6 +40,7 @@ const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8"
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
 const userCreate = fs.readFileSync(__dirname + "/public/userCreate/userCreate.html", "utf-8");
+const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 
 app.get("/", (req, res) => {
     res.send(header + landingpage + footer)
@@ -48,6 +49,10 @@ app.get("/", (req, res) => {
 
 app.get("/createUser", (req, res) => {
     res.send(header + userCreate + footer)
+})
+
+app.get("/login", (req, res) => {
+    res.send(header + login + footer)
 })
 
 
