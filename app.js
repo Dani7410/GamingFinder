@@ -53,27 +53,27 @@ app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
 })
 
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
 
-const myFunction = async () => {
-    const password = 'red12345!'
-    const hashedPassword = await bcrypt.hash(password, 8)
+// const myFunction = async () => {
+//     const password = 'red12345!'
+//     const hashedPassword = await bcrypt.hash(password, 8)
 
-    console.log(password);
-    console.log(hashedPassword);
+//     console.log(password);
+//     console.log(hashedPassword);
 
-    const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
-    console.log(isMatch)
-}
+//     const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
+//     console.log(isMatch)
+// }
 
-myFunction()
+
 
 // daniel -> fjjkndfksd -> daniel **unhashed
 // daniel -> sldkfklsfdklmfs ** hashed
 
 
 
-app.get("/createUser", (req, res) => {
+app.get("/user/createPage", (req, res) => {
     res.send(header + userCreate + footer)
 })
 

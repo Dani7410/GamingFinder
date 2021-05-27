@@ -5,16 +5,24 @@ const User = require("../models/user");
 
 
 // API  kald til oprettelse af user 
- router.post("/user/create", (req, res) => {
+ router.post("/user/create", async (req, res) => {
     const user = new User(req.body)
-    user.save()
-    .then((result) => {
-        res.send(result);
-        console.log("user was succesfully created in the database.")
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+
+    try{
+        await user.save()
+        res.status(201).send(user)
+
+    } catch(error){
+        res.status(400).send(error)
+    }
+    // user.save()
+    // .then(() => {
+    //     res.send(user);
+    //     console.log("user was succesfully created in the database.")
+    // })
+    // .catch((error) => {
+    //     res.status(400).send(e)
+    // })
 
     // redirect til login.
 })
@@ -99,6 +107,19 @@ router.delete("/user/delete/:id", async (req,res) => {
         console.log("User was deleted");
     }catch(error){
         res.status(500).send()
+
+    }
+})
+
+
+router.post('/user/login', async (req, res) => {
+    try{
+        const user = await User.findByCredentials(req.body.email, req.body.accountPassword)
+
+        res.send(user)
+
+    }catch(error){
+        res.status(400).send()
 
     }
 })
