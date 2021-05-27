@@ -48,7 +48,7 @@ router.get('/Oneuser/:id', (req, res) =>{
 })
 
 // user find finder alle users.
-router.get("/users", (req, res) =>{
+router.get("/users/all", (req, res) =>{
     User.find()
         .then((result) => {
           res.send(result);
