@@ -19,6 +19,13 @@ const User = require("../models/user");
     // redirect til login.
 })
 
+// post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
+router.post("/login", (req, res)=>{
+    const _matchName = req.body.accountName
+    const _matchPw = req.body.accountPassword
+
+    User.find
+}) 
 
 router.get('/users/:id', (req, res) =>{
     // console.log(res.params)
@@ -40,7 +47,7 @@ router.get('/users/:id', (req, res) =>{
     })    
 })
 
-
+// user find finder alle users.
 router.get("/users", (req, res) =>{
     User.find()
         .then((result) => {
