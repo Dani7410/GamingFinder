@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 
 // API  kald til oprettelse af user 
- router.post("/createUser", (req, res) => {
+ router.post("/create/User", (req, res) => {
     const user = new User(req.body)
     user.save()
     .then((result) => {
@@ -20,7 +20,7 @@ const User = require("../models/user");
 })
 
 
-router.get('/users/:id', (req, res) =>{
+router.get('/Oneuser/:id', (req, res) =>{
     // console.log(res.params)
    
     const _id = req.params.id
@@ -41,7 +41,7 @@ router.get('/users/:id', (req, res) =>{
 })
 
 
-router.get("/users", (req, res) =>{
+router.get("/users/all", (req, res) =>{
     User.find()
         .then((result) => {
           res.send(result);
@@ -51,17 +51,28 @@ router.get("/users", (req, res) =>{
         });
 })
 
-router.patch('/users/:id', async (req, res) =>{
+router.patch('/users/update/:id', async (req, res) =>{
+    const allowedUpdated = ['name','accountName','accountPassword', 'contactInfo', 'age', 'email', 'gender']
+
+
     try{
-        const user = await User.findByIdAndUpdate(req.params.id, )
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
+
+        if(!user){
+            return res.status(404).send()
+        }
+
+        res.send(user)
+
     } catch(error){
 
+        res.status(400).send()
     }
 })
 
 
 
-router.delete("/user/:id", async (req,res) => {
+router.delete("/user/delete/:id", async (req,res) => {
     try{
         const user = await User.findByIdAndDelete(req.params.id)
 
