@@ -3,6 +3,20 @@ const Game = require("../models/game");
 
 
 
+// Api kald til oprettelse af game
+router.post("/game/create", (req, res) => {
+    const game = new Game(req.body)
+    game.save()
+    .then((result) => {
+        res.send(result);
+        console.log("game was succesfully created in the database.")
+    })
+    .catch((error) => {
+        console.log(error)
+        res.send(error);
+    })
+})
+
 
 // mongoose and mongo sandbox routes. " test routes" // skal laves om til post med req. body parametre.
 router.get("/game/create", (req, res) => {
@@ -40,5 +54,32 @@ router.get("/games", (req, res) => {
           console.log(error);
         });
 })
+
+// Get kald med id parameter
+router.get('/game/:id', (req, res) =>{
+     
+    const _id = req.params.id
+
+    Game.findById(_id)
+    .then((result) =>{
+        
+        if(!result) {
+            console.log('the game was not found');
+            return res.status(404).send('the game was not found')
+            
+        }
+
+        res.send(result)
+        console.log('the game was found');
+    }).catch((error) =>{
+        console.log(error);
+        res.status(500).send()
+    })    
+})
+
+
+
+
+
 
 module.exports = {router}
