@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 
 // API  kald til oprettelse af user 
- router.post("/create/User", (req, res) => {
+ router.post("/user/create", (req, res) => {
     const user = new User(req.body)
     user.save()
     .then((result) => {
@@ -27,7 +27,7 @@ router.post("/login", (req, res)=>{
     User.find
 }) 
 
-router.get('/Oneuser/:id', (req, res) =>{
+router.get('/user/one/:id', (req, res) =>{
     // console.log(res.params)
    
     const _id = req.params.id
@@ -59,8 +59,13 @@ router.get("/users/all", (req, res) =>{
 })
 
 router.patch('/users/update/:id', async (req, res) =>{
+    const updates = Object.keys(req.body)
     const allowedUpdated = ['name','accountName','accountPassword', 'contactInfo', 'age', 'email', 'gender']
+    const isValidOperation = updates.every((update) => allowedUpdated.includes(update))
 
+    if(!isValidOperation){
+        return res.status(400).send({ error: 'invalid updates!' })
+    }
 
     try{
         const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
