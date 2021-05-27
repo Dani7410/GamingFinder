@@ -43,20 +43,41 @@ const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8"
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
 const userCreate = fs.readFileSync(__dirname + "/public/userCreate/userCreate.html", "utf-8");
-const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
+// const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 
 app.get("/", (req, res) => {
     res.send(header + landingpage + footer)
 });
+
+app.get("/login", (req, res) => {
+    res.sendFile(__dirname + "/public/login/login.html")
+})
+
+const bcrypt = require('bcryptjs')
+
+const myFunction = async () => {
+    const password = 'red12345!'
+    const hashedPassword = await bcrypt.hash(password, 8)
+
+    console.log(password);
+    console.log(hashedPassword);
+
+    const isMatch = await bcrypt.compare('Red12345!', hashedPassword)
+    console.log(isMatch)
+}
+
+myFunction()
+
+// daniel -> fjjkndfksd -> daniel **unhashed
+// daniel -> sldkfklsfdklmfs ** hashed
+
 
 
 app.get("/createUser", (req, res) => {
     res.send(header + userCreate + footer)
 })
 
-app.get("/login", (req, res) => {
-    res.send(header + login + footer)
-})
+
 
 
 

@@ -20,25 +20,7 @@ const User = require("../models/user");
 })
 
 // post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
-router.post("/login", (req, res)=>{
-    const _matchName = req.body.accountName
-    const _matchPw = req.body.accountPassword
 
-    User.findOne({
-        arrountName : _matchName
-    }).then((error, user) => {
-        if(error){
-            res.status(500).send({ message: error });
-            return;
-        }
-        
-            
-        
-    })
-      .catch((error) => {
-        console.log(error);
-      });
-}) 
 
 router.get('/user/one/:id', (req, res) =>{
     // console.log(res.params)
@@ -71,6 +53,8 @@ router.get("/users/all", (req, res) =>{
         });
 })
 
+
+
 router.patch('/users/update/:id', async (req, res) =>{
     const updates = Object.keys(req.body)
     const allowedUpdated = ['name','accountName','accountPassword', 'contactInfo', 'age', 'email', 'gender']
@@ -81,7 +65,14 @@ router.patch('/users/update/:id', async (req, res) =>{
     }
 
     try{
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
+
+        const user = await User.findById(req.params.id)
+
+        updates.forEach((update) => user[update] = req.body[update])
+
+        await user.save()
+
+        //const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
 
         if(!user){
             return res.status(404).send()

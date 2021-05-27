@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const validator = require("validator")
+const bcrypt = require('bcryptjs')
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
 
     // by "opening" up the json object we can modify the properties insted of just {name: susan}
     name: {
@@ -79,5 +80,15 @@ const userSchema = new Schema({
     // }
 }, {timestamps: true});
     
-    const User = mongoose.model("User", userSchema);
-    module.exports = User;
+userSchema.pre('save', async function (next) {
+    const user = this
+
+    if (user.isModified('accountPassword')) {
+        user.accountPassword = await bcrypt.hash(user.accountPassword, 8)
+    }
+
+    next()
+})
+
+const User = mongoose.model("User", userSchema);
+module.exports = User;
