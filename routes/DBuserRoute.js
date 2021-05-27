@@ -15,16 +15,6 @@ const User = require("../models/user");
     } catch(error){
         res.status(400).send(error)
     }
-    // user.save()
-    // .then(() => {
-    //     res.send(user);
-    //     console.log("user was succesfully created in the database.")
-    // })
-    // .catch((error) => {
-    //     res.status(400).send(e)
-    // })
-
-    // redirect til login.
 })
 
 // post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
