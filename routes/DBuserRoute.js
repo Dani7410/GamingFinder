@@ -11,10 +11,12 @@ const User = require("../models/user");
     try{
         await user.save()
         res.status(201).send(user)
+        
 
     } catch(error){
         res.status(400).send(error)
-    }
+    } 
+    
 })
 
 // post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
