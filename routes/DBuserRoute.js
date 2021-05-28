@@ -10,7 +10,8 @@ const User = require("../models/user");
 
     try{
         await user.save()
-        res.status(201).send(user)
+        // res.status(201).send(user)
+        res.redirect('/')
         
 
     } catch(error){
