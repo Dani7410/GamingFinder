@@ -18,17 +18,15 @@ $(function() {
              // tømmer html indholder inden oprettelse at nyt.
              gameTableEL.html=" ";
 
-             response.results.Object.forEach(function(result) {
+             response.result.forEach(function(game) {
                  gameTableEL.append('\
-                 <div class="col">\
-                 <div class="card h-100">\
-                 <img src="images/3612569.png" class="card-img-top" alt="...">\
-                 <div class="card-body">\
-                   <h5 class="card-title">' + result.Object.name + '</h5>\
-                   <p class="card-text">'+ result.Object.minAge +'</p>\
-                 </div>\
-               </div>\
-             </div>\
+                  <div class="card h-100">\
+                   <img src="images/3612569.png" class="card-img-top" alt="...">\
+                     <div class="card-body">\
+                        <h5 class="card-title">'+ game.name +'</h5>\
+                        <p class="card-text">' + game.minAge + '</p>\
+                     </div>\
+                  </div>\
                  ');
              });
         }

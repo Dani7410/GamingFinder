@@ -6,9 +6,6 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 
-
-
-
 //Used to administer .env files in our applications - Used as a part of db connection
 dotenv.config()
 

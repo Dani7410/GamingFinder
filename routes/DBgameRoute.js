@@ -44,7 +44,7 @@ router.get("/api/games", (req, res) => {
     // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
     Game.find()
         .then((result) => {
-          res.send(result);
+          res.send({result});
         })
         .catch((error) => {
           console.log(error);
