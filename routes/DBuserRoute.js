@@ -10,52 +10,50 @@ const User = require("../models/user");
 
     try{
         await user.save()
+        const token = await user.generateAuthToken()
         // res.status(201).send(user)
-        res.redirect('/')
+        res.status(201).send({user, token})
+        //res.redirect('/')
         
 
     } catch(error){
         res.status(400).send(error)
     } 
-    
 })
 
+
 // post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
-
-
-router.get('/user/one/:id', (req, res) =>{
+router.get('/user/one/:id', async (req, res) =>{
     // console.log(res.params)
    
     const _id = req.params.id
 
-    User.findById(_id).then((result) =>{
-        
-        if(!result) {
-            console.log('the user was not found');
-            return res.status(404).send('the user was not found')
-            
+    try{
+        const user = await User.findById(_id)
+        if(!user){
+            return res.status(404).send()
         }
 
-        res.send(result)
-        console.log('the user was found');
-    }).catch((error) =>{
+        res.send(user)
+
+    }catch(error){
         res.status(500).send()
-    })    
+    }
 })
+
 
 // user find finder alle users.
-router.get("/users/all", (req, res) =>{
-    User.find()
-        .then((result) => {
-          res.send(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+router.get("/users/all", async (req, res) =>{
+    try{
+        const users = await User.find({})
+        res.send(users)
+    }catch(error){
+        res.status(500).send()
+    }
 })
 
 
-
+// path til at update in bruger
 router.patch('/users/update/:id', async (req, res) =>{
     const updates = Object.keys(req.body)
     const allowedUpdated = ['name','accountName','accountPassword', 'contactInfo', 'age', 'email', 'gender']
@@ -88,7 +86,7 @@ router.patch('/users/update/:id', async (req, res) =>{
 })
 
 
-
+// delete metode til at delete en bruger
 router.delete("/user/delete/:id", async (req,res) => {
     try{
         const user = await User.findByIdAndDelete(req.params.id)
@@ -104,12 +102,12 @@ router.delete("/user/delete/:id", async (req,res) => {
     }
 })
 
-
+// post "login" metode der tager req body parametre og sammenligner med brugernavn samt passwo
 router.post('/user/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.accountPassword)
-
-        res.send(user)
+        const token = await user.generateAuthToken()
+        res.send({ user, token })
 
     }catch(error){
         res.status(400).send()
@@ -117,19 +115,6 @@ router.post('/user/login', async (req, res) => {
     }
 })
 
-
-// name: "daniel",
-// accountName: "susan-nator",
-// accountPassword:'123456',
-// contactInfo: " discord#4453 - steam#idFiktive",
-// age: 21,
-// email: "test@gmail",
-// gender: "woman",
-// userType: "Member",
-// onlineState: false,
-// mostPlayedGame: "League of legends",
-// recentlyPlayedWith: "søren",
-// friends: "Friends are: søren - bendte",
 
 
 module.exports = {router};
