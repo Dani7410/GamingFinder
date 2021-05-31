@@ -56,6 +56,9 @@ app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
 })
 
+
+//Example of how hashing works
+
 // const bcrypt = require('bcryptjs')
 
 // const myFunction = async () => {
