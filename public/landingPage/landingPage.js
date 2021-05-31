@@ -16,26 +16,36 @@ $(function() {
              var gameTableEL = $("gameTable");
 
              // tømmer html indholder inden oprettelse at nyt.
-             gameTableEL.html=" ";
-
+             gameTableEL.html="";
+             let resultsToApply = "";
+             let cardCounter = 0; 
              response.result.forEach(function(game) {
                
-                 gameTableEL.append('\
-                 <div class="col">\
-                 <div class="card h-100">\
-                 <img src="images/3612569.png" class="card-img-top" alt="...">\
-                 <div class="card-body">\      
-                 <h5 class="card-title">'+ game.name +'</h5>\
-                        <p class="card-text">' + game.minAge + '</p>\
-                        </div>\
-                        </div>\
-                 ');
+               // hvis cardCounter er 1 så bruges flex justify content start eller tom strng" intet"
+               resultsToApply += cardCounter===1? '<div class="row">': "";
+               resultsToApply += 
+
+                 '<div class="col">'+
+                    '<div class="card h-100">'+
+                        '<img src="images/3612569.png" class="card" alt="...">'+
+                            '<div class="card-body">'+
+                        '<h5 class="card-title">'+ game.name +'</h5>'+
+                    '<p class="card-text">' + game.minAge + '</p>'+
+                  '</div>'+
+                '</div>'+
+              '</div>'
+                 ;
+                resultsToApply += (cardCounter ==1) ? "</div>": "";
+                if(cardCounter === 3){
+                  cardCounter =1;
+                }
+                cardCounter++
              });
-        }
+            document.getElementById("gameTable").innerHTML=resultsToApply;
+            // gameTableEL.innerHTML = resultsToApply
+            }
     });
 });
-
-
 
 
 /* dette skal vises.
@@ -43,6 +53,7 @@ $(function() {
 
 
 <% for(var game of games) { %>
+
       <div class="col">
           <div class="card h-100">
             <img src="images/3612569.png" class="card-img-top" alt="...">
@@ -56,10 +67,7 @@ $(function() {
       
  <% } %>
 
-
-
 </div>
-
-
-
 */
+
+
