@@ -81,6 +81,8 @@ const userSchema = new mongoose.Schema({
     // }
 }, {timestamps: true});
 
+
+//Email and password validation for login 
 userSchema.statics.findByCredentials = async (email, accountPassword) =>{
     const user = await User.findOne({ email })
 
