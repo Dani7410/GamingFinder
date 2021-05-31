@@ -56,6 +56,7 @@ app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
 })
 
+app.get("/")
 
 //Example of how hashing works
 

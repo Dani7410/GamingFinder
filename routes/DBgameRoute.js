@@ -39,6 +39,18 @@ router.get("/games", (req, res) => {
         });
 })
 
+// kald på alle games.
+router.get("/api/games", (req, res) => {
+    // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
+    Game.find()
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+})
+
 // Get kald med id parameter
 router.get('/game/:id', (req, res) =>{
 
