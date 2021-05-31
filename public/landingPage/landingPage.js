@@ -19,14 +19,16 @@ $(function() {
              gameTableEL.html=" ";
 
              response.result.forEach(function(game) {
+               
                  gameTableEL.append('\
-                  <div class="card h-100">\
-                   <img src="images/3612569.png" class="card-img-top" alt="...">\
-                     <div class="card-body">\
-                        <h5 class="card-title">'+ game.name +'</h5>\
+                 <div class="col">\
+                 <div class="card h-100">\
+                 <img src="images/3612569.png" class="card-img-top" alt="...">\
+                 <div class="card-body">\      
+                 <h5 class="card-title">'+ game.name +'</h5>\
                         <p class="card-text">' + game.minAge + '</p>\
-                     </div>\
-                  </div>\
+                        </div>\
+                        </div>\
                  ');
              });
         }
