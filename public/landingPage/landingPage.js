@@ -13,34 +13,37 @@ $(function() {
         url: "/api/games",
         contentType: "application/json" ,
         success: function(response) {
-             var gameTableEL = $("gameTable");
+            // var gameTableEL = $("gameTable");
 
              // tømmer html indholder inden oprettelse at nyt.
-             gameTableEL.html="";
+             //gameTableEL.html="";
              let resultsToApply = "";
              let cardCounter = 0; 
              response.result.forEach(function(game) {
                
                // hvis cardCounter er 1 så bruges flex justify content start eller tom strng" intet"
-               resultsToApply += cardCounter===1? '<div class="row">': "";
-               resultsToApply += 
-
-                 '<div class="col">'+
-                    '<div class="card h-100">'+
-                        '<img src="images/3612569.png" class="card" alt="...">'+
-                            '<div class="card-body">'+
-                        '<h5 class="card-title">'+ game.name +'</h5>'+
-                    '<p class="card-text">' + game.minAge + '</p>'+
-                  '</div>'+
-                '</div>'+
-              '</div>'
+               resultsToApply += cardCounter=== 0? '<div class="row row-cols-1 row-cols-md-3 g-4">': "";
+               resultsToApply +=
+               '<td>'+
+               '<div class="card h-100">'+
+                 '<div class="card-body">'+
+                 '<img src="images/3612569.png" class="card-img-top" alt="..."></img>'+
+                   '<h5 class="card-title">'+ game.name +' </h5>'+
+                   '<p class="card-text"> '+ game.minAge +' </p>'+
+                   '<p class="card-text">   '+ game.playerVsPlayer +'</p>'+
+                 '</div>'+
+               '</div>'+
+             '</td>'
                  ;
-                resultsToApply += (cardCounter ==1) ? "</div>": "";
-                if(cardCounter === 3){
-                  cardCounter =1;
-                }
+                 console.log(cardCounter);
+                resultsToApply += (cardCounter === 0) ? "</div>": "";
+                
                 cardCounter++
+                if(cardCounter > 2){
+                  cardCounter = 0;
+                }
              });
+           // $('#gameTable').append(resultsToApply);
             document.getElementById("gameTable").innerHTML=resultsToApply;
             // gameTableEL.innerHTML = resultsToApply
             }
