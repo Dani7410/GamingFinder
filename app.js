@@ -80,6 +80,7 @@ app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
 })
 
+app.get("/")
 
 
 
