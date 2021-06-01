@@ -6,6 +6,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 
+
+
+
+
 //Used to administer .env files in our applications - Used as a part of db connection
 dotenv.config()
 
@@ -25,6 +29,26 @@ const dbUserRoute = require("./routes/DBuserRoute");
 const dbGameRoute = require("./routes/DBgameRoute");
 const dbChannelRoute = require("./routes/DBchannelRoute");
 
+
+// app.use((req, res, next) =>{
+//     if(req.method === 'GET'){
+//         res.send('GET request disabled')
+//     }else{
+//         next()
+//     }
+
+
+    //middleware: Stops the request for until the middleware has been fulfilled 
+    // console.log(req.method, req.path);
+    // next()
+// })
+
+app.use((req,res,next) => {
+    res.status(503).send('site is down check back soon')
+})
+
+
+
 //App use
 app.use(express.json());
 app.use(express.static("public"));
@@ -34,6 +58,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(dbUserRoute.router);
 app.use(dbGameRoute.router);
 app.use(dbChannelRoute.router);
+
+
 
 
 
@@ -54,6 +80,14 @@ app.get("/login", (req, res) => {
 })
 
 app.get("/")
+
+
+
+
+
+app.get("/user/create", (req, res) => {
+    res.send(header + userCreate + footer)
+})
 
 //Example of how hashing works
 
@@ -76,10 +110,24 @@ app.get("/")
 // daniel -> sldkfklsfdklmfs ** hashed
 
 
+//example of how auth token works
+// const jwt = require('jsonwebtoken')
 
-app.get("/user/create", (req, res) => {
-    res.send(header + userCreate + footer)
-})
+// const myFunction = async () => {
+//     const token = jwt.sign({ _id: 'abc123'}, 'somethingworks', {expiresIn: '7d'})
+//     console.log(token);
+
+//     const data = jwt.verify(token, 'somethingworks')
+//     console.log(data);
+// }
+
+// myFunction()
+
+//middelware
+
+//without middleware new request -> run router handler
+
+//with middles new request -> do something -> run router handler
 
 
 
