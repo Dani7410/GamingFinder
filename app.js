@@ -70,17 +70,24 @@ const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8"
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
 const userCreate = fs.readFileSync(__dirname + "/public/userCreate/userCreate.html", "utf-8");
+const channel = fs.readFileSync(__dirname + "/public/channel/channel.html", "utf-8");
 // const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 
 app.get("/", (req, res) => {
     res.send(header + landingpage + footer)
 });
 
+// channel view test med params
+app.get("/channel12/:id", (req, res) => {
+    res.send(header + channel + footer)
+});
+
+
 app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
 })
 
-app.get("/")
+
 
 
 
