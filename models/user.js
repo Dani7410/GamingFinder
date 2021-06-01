@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         minlength: 6,
-        maxlength: 25,
+        maxlength: 500,
         validate(value){
             if(validator.equals('password',value)){
                 throw new Error('password cant be ' + value)
@@ -91,10 +91,10 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, 'tokenValuethatreflects')
+    const token = jwt.sign({ _id: user._id.toString() }, 'TokenSecret')
 
     user.tokens = user.tokens.concat({ token })
-    await user.save
+    await user.save()
 
     return token 
 
@@ -126,6 +126,8 @@ userSchema.pre('save', async function (next) {
     }
 
     next()
+
+    
 })
 
 const User = mongoose.model("User", userSchema);

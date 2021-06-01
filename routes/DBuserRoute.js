@@ -9,8 +9,11 @@ const User = require("../models/user");
     const user = new User(req.body)
 
     try{
+
+        
         await user.save()
         const token = await user.generateAuthToken()
+        
         // res.status(201).send(user)
         res.status(201).send({user, token})
         //res.redirect('/')
@@ -56,7 +59,7 @@ router.get("/users/all", async (req, res) =>{
 // path til at update in bruger
 router.patch('/users/update/:id', async (req, res) =>{
     const updates = Object.keys(req.body)
-    const allowedUpdated = ['name','accountName','accountPassword', 'contactInfo', 'age', 'email', 'gender']
+    const allowedUpdated = ['name','accountName', 'contactInfo', 'age', 'email', 'gender']
     const isValidOperation = updates.every((update) => allowedUpdated.includes(update))
 
     if(!isValidOperation){
@@ -65,13 +68,14 @@ router.patch('/users/update/:id', async (req, res) =>{
 
     try{
 
+       
         const user = await User.findById(req.params.id)
 
         updates.forEach((update) => user[update] = req.body[update])
-
         await user.save()
-
         //const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
+
+
 
         if(!user){
             return res.status(404).send()
@@ -81,7 +85,7 @@ router.patch('/users/update/:id', async (req, res) =>{
 
     } catch(error){
 
-        res.status(400).send()
+        res.status(400).send(error)
     }
 })
 
@@ -103,11 +107,11 @@ router.delete("/user/delete/:id", async (req,res) => {
 })
 
 // post "login" metode der tager req body parametre og sammenligner med brugernavn samt passwo
-router.post('/user/login', async (req, res) => {
+router.post('/users/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.accountPassword)
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        res.send({user, token})
 
     }catch(error){
         res.status(400).send()
