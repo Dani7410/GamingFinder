@@ -22,7 +22,7 @@ $(function() {
              response.result.forEach(function(game) {
                
                // hvis cardCounter er 1 så bruges flex justify content start eller tom strng" intet"
-               resultsToApply += cardCounter=== 0? '<div class="row row-cols-1 row-cols-md-3 g-4">': "";
+               resultsToApply += cardCounter=== 0? '<tr>': "";
                resultsToApply +=
                '<td>'+
                '<div class="card h-100">'+
@@ -36,7 +36,7 @@ $(function() {
              '</td>'
                  ;
                  console.log(cardCounter);
-                resultsToApply += (cardCounter === 0) ? "</div>": "";
+                resultsToApply += (cardCounter === 3) ? "</tr>": "";
                 
                 cardCounter++
                 if(cardCounter > 2){
