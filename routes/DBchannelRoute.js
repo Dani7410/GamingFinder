@@ -4,7 +4,7 @@ const Channel = require("../models/channel");
 
 
 // get på channel id.
-router.get("channel/:id", (req, res) =>{
+router.get("/channel/:id", (req, res) =>{
     const _id = req.params.id
 
     Channel.findById(_id)
