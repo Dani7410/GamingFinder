@@ -43,9 +43,10 @@ const dbChannelRoute = require("./routes/DBchannelRoute");
     // next()
 // })
 
-app.use((req,res,next) => {
-    res.status(503).send('site is down check back soon')
-})
+// app.use((req,res,next) => {
+//     res.status(503).send('site is down check back soon')
+//     next()
+// })
 
 
 
