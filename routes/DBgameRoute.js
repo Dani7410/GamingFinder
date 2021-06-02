@@ -25,7 +25,7 @@ router.get("/game/create", (req, res) => {
     .catch((error) => {
         console.log(error);
     });
-})
+});
 
 // kald på alle games.
 router.get("/games", (req, res) => {
@@ -37,7 +37,7 @@ router.get("/games", (req, res) => {
         .catch((error) => {
           console.log(error);
         });
-})
+});
 
 // kald på alle games.
 router.get("/api/games", (req, res) => {
@@ -49,7 +49,7 @@ router.get("/api/games", (req, res) => {
         .catch((error) => {
           console.log(error);
         });
-})
+});
 
 // Get kald med id parameter
 router.get('/game/:id', (req, res) =>{
@@ -64,12 +64,15 @@ router.get('/game/:id', (req, res) =>{
             console.log('the game was not found');
             return res.status(404).send('the game was not found')
         }
+
         res.send(result)
         console.log('the game was found');
+
     }).catch((error) =>{
+
         console.log(error);
         res.status(500).send()
-    })    
+    });    
 })
 
 // Api kald til oprettelse af game
