@@ -12,7 +12,7 @@ const dbGameRoute = require("./routes/DBgameRoute");
 const dbChannelRoute = require("./routes/DBchannelRoute");
 
 
-//App use
+//App use middleware
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.json());
