@@ -14,7 +14,7 @@ const dotenv = require("dotenv");
 dotenv.config()
 
 //Connect with the mongoDB Cluster
-const dbURI = "mongodb+srv://"+process.env.TESTUSERNAME+":"+process.env.TESTPASSWORD+"@cluster0.ktewt.mongodb.net/GamePortal?retryWrites=true&w=majority"
+const dbURI = "mongodb+srv://"+process.env.USER+":"+process.env.PASS+"@cluster0.ktewt.mongodb.net/GamePortal?retryWrites=true&w=majority"
 
 // this is acturly a async task. it goes out and takes some time to do and therefore it returns something like a promise.
 // so we can attatch a then method to it, "this action is handled after the connection to the database have been made."
