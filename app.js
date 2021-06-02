@@ -57,8 +57,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.urlencoded({ extended: true }));
 app.use(dbUserRoute.router);
-app.use(dbGameRoute.router);
-app.use(dbChannelRoute.router);
+// app.use(dbGameRoute.router);
+// app.use(dbChannelRoute.router);
 
 
 
