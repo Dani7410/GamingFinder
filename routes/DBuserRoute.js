@@ -1,5 +1,6 @@
-const router = require("express").Router({mergeParams: true});
+const router = require("express").Router();
 const User = require("../models/user");
+const auth = require('../Middleware/auth');
 
 
 
@@ -42,16 +43,19 @@ router.get('/user/one/:id', async (req, res) =>{
 
 
 // user find finder alle users.
-router.get("/users/all", async (req, res) =>{
-    try{
-        const users = await User.find({})
-        res.send(users)
-
-    }catch(error){
-        res.status(500).send()
-    };
+router.get("/users/me", auth, async (req, res) =>{
+    res.send(req.user)
 });
 
+// router.get("/users/all", auth, async (req, res) =>{
+//     try{
+//         const users = await User.find({})
+//         res.send(users)
+
+//     }catch(error){
+//         res.status(500).send()
+//     };
+// });
 
 // path til at update in bruger
 router.patch('/users/update/:id', async (req, res) =>{
@@ -114,3 +118,18 @@ router.post('/users/login', async (req, res) => {
 
 
 module.exports = {router};
+
+//Former router method which gets all user without authentication..
+//since we dont wanne expose data to all users, we have created a middleware function which authenticates an 
+//user before we can access the data. In that case its all done by a token.
+//That means that the get all users function is deprecated. And now we can only return one user with the 
+// right authentication. That way users have no way of seeing data on other users, beside them selves.
+// router.get("/users/all", auth, async (req, res) =>{
+//     try{
+//         const users = await User.find({})
+//         res.send(users)
+
+//     }catch(error){
+//         res.status(500).send()
+//     };
+// });

@@ -19,6 +19,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.urlencoded({ extended: true }));
 
+// app.use((req,res,next) => {
+//     res.status(503).send('site is down check back soon')
+//     next()
+// })
 
 app.use(dbUserRoute.router);
 app.use(dbGameRoute.router);
@@ -34,15 +38,14 @@ const channel = fs.readFileSync(__dirname + "/public/channel/channel.html", "utf
 
 
 //Html Routes
+
 app.get("/", (req, res) => {
     res.send(header + landingpage + footer)
 });
 
-
 app.get("/channel12/:id", (req, res) => {
     res.send(header + channel + footer)
 });
-
 
 app.get("/login", (req, res) => {
     res.sendFile(__dirname + "/public/login/login.html")
