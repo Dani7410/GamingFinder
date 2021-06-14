@@ -1,20 +1,20 @@
 const router = require("express").Router();
 const Game = require("../models/game");
-
+//original 
 
 // mongoose and mongo sandbox routes. " test routes" // skal laves om til post med req. body parametre.
-router.get("/game/create", (req, res) => {
+router.get("/game/create", async (req, res) => {
     const game = new Game({
-        name: "Valorant",
-        genre: "Shooter, FPS",
-        minAge: "10",
-        channelLink: "https://www.artbook.net/en/work-in-progress/#iLightbox[gallery4319]/0",
-        image: "https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg",
-        multiplayer: true,
-        playerVsPlayer: true,
-        rolePlayingGame: false,
-        shooter: true,
-        massiveMultiplayerOnlineRoleplayingGame: false
+        // name: "Valorant",
+        // genre: "Shooter, FPS",
+        // minAge: "10",
+        // channelLink: "https://www.artbook.net/en/work-in-progress/#iLightbox[gallery4319]/0",
+        // image: "https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg",
+        // multiplayer: true,
+        // playerVsPlayer: true,
+        // rolePlayingGame: false,
+        // shooter: true,
+        // massiveMultiplayerOnlineRoleplayingGame: false
     });
     
     // dette er også async, og det tager en lille smule tid at udføre, derfor retunere det et "promise"
@@ -42,15 +42,34 @@ router.get("/games", (req, res) => {
 });
 
 // kald på alle games.
-router.get("/api/games", (req, res) => {
+router.get("/api/games", async(req, res) => {
     // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
-    Game.find()
-        .then((result) => {
-          res.send({result});
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    // original
+    // Game.find()
+    //     .then((result) => {
+    //       res.send({result});
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+
+    const game = new Game(req.body)
+
+    try{
+        await game.save()
+        // const token = await user.generateAuthToken()
+        
+        // res.status(201).send(user)
+        res.status(201).send({game})
+        //res.redirect('/')
+        
+
+    }catch(error){
+        res.status(400).send(error)
+    }; 
+
+
+
 });
 
 // Get kald med id parameter
