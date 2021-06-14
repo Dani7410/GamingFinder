@@ -116,7 +116,7 @@ router.post('/users/login', async (req, res) => {
         
 
     }catch(error){
-        res.status(400).send(error)
+        res.status(400).sendFile(path.resolve(__dirname,'..', 'public/views','errorPage.html'))
 
     };
 });

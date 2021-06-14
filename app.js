@@ -51,7 +51,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/user/create", (req, res) => {
-    res.send( userCreate )
+    res.send(userCreate)
 });
 
 app.get("/channel12/:id", (req, res) => {

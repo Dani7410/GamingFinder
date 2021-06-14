@@ -17,7 +17,8 @@ const auth = async (req, res, next) =>{
         next()
 
     }catch(error){
-        res.status(401).send({error: 'please authenticate'})
+        res.status(401).redirect("/login")
+        //.send({error: 'please authenticate'})
 
     }
 }
