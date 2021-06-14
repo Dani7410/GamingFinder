@@ -42,33 +42,17 @@ router.get("/games", (req, res) => {
 });
 
 // kald på alle games.
-router.get("/api/games", async(req, res) => {
+router.get("/api/games", async (req, res) => {
     // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
     // original
-    // Game.find()
-    //     .then((result) => {
-    //       res.send({result});
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-
-    const game = new Game(req.body)
-
-    try{
-        await game.save()
-        // const token = await user.generateAuthToken()
-        
-        // res.status(201).send(user)
-        res.status(201).send({game})
-        //res.redirect('/')
-        
-
-    }catch(error){
-        res.status(400).send(error)
-    }; 
-
-
+    Game.find()
+        .then((result) => {
+          res.send({result});
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    // Kigge på dette 
 
 });
 
@@ -97,17 +81,22 @@ router.get('/game/:id', (req, res) =>{
 })
 
 // Api kald til oprettelse af game
-router.post("/game/create", (req, res) => {
-    const game = new Game(req.body)
-    game.save()
-    .then((result) => {
-        res.send(result);
-        console.log("game was succesfully created in the database.")
-    })
-    .catch((error) => {
-        console.log(error)
-        res.send(error);
-    })
+router.post("/game/create", async (req, res) => {
+
+        const game = new Game(req.body)
+
+    try{
+        await game.save()
+        // const token = await user.generateAuthToken()
+        
+        // res.status(201).send(user)
+        res.status(201).send({game})
+        //res.redirect('/')
+        
+
+    }catch(error){
+        res.status(400).send(error)
+    }; 
 })
 
 // patch/ update route
