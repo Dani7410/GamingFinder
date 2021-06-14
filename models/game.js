@@ -15,6 +15,14 @@ const gameSchema = new Schema({
         type: String,
         
     },
+    channelLink: {
+        type: String,
+
+    },
+    image: {
+        type: String,
+
+    },
     multiplayer: {
         type: Boolean,
         

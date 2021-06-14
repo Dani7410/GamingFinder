@@ -5,13 +5,15 @@ const Game = require("../models/game");
 // mongoose and mongo sandbox routes. " test routes" // skal laves om til post med req. body parametre.
 router.get("/game/create", (req, res) => {
     const game = new Game({
-        name: "Warcraft2",
-        genre: "strategy",
-        minAge: "age from 5 to 99",
+        name: "Valorant",
+        genre: "Shooter, FPS",
+        minAge: "10",
+        channelLink: "https://www.artbook.net/en/work-in-progress/#iLightbox[gallery4319]/0",
+        image: "https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg",
         multiplayer: true,
         playerVsPlayer: true,
         rolePlayingGame: false,
-        shooter: false,
+        shooter: true,
         massiveMultiplayerOnlineRoleplayingGame: false
     });
     
