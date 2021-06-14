@@ -1,9 +1,12 @@
 const express = require("express");
-const bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser")
 const fs = require("fs");
-const app = express();
+const authentication = require("./Middleware/auth")
 require('dotenv').config();
 require('./db/mongooseDB');
+
+
+const app = express();
 
 
 //Import with require to get our route
@@ -12,24 +15,24 @@ const dbGameRoute = require("./routes/DBgameRoute");
 const dbChannelRoute = require("./routes/DBchannelRoute");
 
 
+
+
 //App use middleware
 app.use(express.json());
 app.use(express.static("public"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser())
 
-// app.use((req,res,next) => {
-//     res.status(503).send('site is down check back soon')
-//     next()
-// })
 
+//App user for routing
 app.use(dbUserRoute.router);
 app.use(dbGameRoute.router);
 app.use(dbChannelRoute.router);
 
 
+
 // SSR
+const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
@@ -39,21 +42,23 @@ const channel = fs.readFileSync(__dirname + "/public/channel/channel.html", "utf
 
 //Html Routes
 
-app.get("/", (req, res) => {
+app.get("/", authentication, (req, res) => {
     res.send(header + landingpage + footer)
+});
+
+app.get("/login", (req, res) => {
+    res.send(login)
+});
+
+app.get("/user/create", (req, res) => {
+    res.send( userCreate )
 });
 
 app.get("/channel12/:id", (req, res) => {
     res.send(header + channel + footer)
 });
 
-app.get("/login", (req, res) => {
-    res.sendFile(__dirname + "/public/login/login.html")
-});
 
-app.get("/user/create", (req, res) => {
-    res.send(header + userCreate + footer)
-});
 
 
 const PORT = process.env.PORT || 8080;
@@ -63,6 +68,28 @@ app.listen(PORT, error => {
     }
     console.log("server is running on port:", Number(PORT));
 });
+
+
+
+//MiddlWare -->
+// app.use((req,res,next) => {
+//     res.status(503).send('site is down check back soon')
+//     next()
+// })
+
+// -- example of how toJSON works
+// const pet = {
+//     name: 'hal'
+// }
+
+// pet.toJSON = function () {
+
+//     return {}
+//     // console.log(this);
+//     // return this
+// }
+
+// console.log(JSON.stringify(pet));
 
 
 

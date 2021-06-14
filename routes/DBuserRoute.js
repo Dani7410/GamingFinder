@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const auth = require('../Middleware/auth');
+const path = require('path')
 
 
 
@@ -13,9 +14,10 @@ const auth = require('../Middleware/auth');
         await user.save()
         const token = await user.generateAuthToken()
         
+        
         // res.status(201).send(user)
-        res.status(201).send({user, token})
-        //res.redirect('/')
+        //res.status(201).send({user, token})
+        res.redirect('/login')
         
 
     }catch(error){
@@ -107,13 +109,46 @@ router.post('/users/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.accountPassword)
         const token = await user.generateAuthToken()
-        res.send({user, token})
+        res.cookie('auth_token', token, { maxAge: 21600000 })
+        //res.send({user, token})
+        res.redirect("/")
+        
+        
 
     }catch(error){
-        res.status(400).send()
+        res.status(400).send(error)
 
     };
 });
+
+router.post('/users/logout', auth, async (req, res) => {
+    try{
+        req.user.tokens = req.user.tokens.filter((token) =>{
+            return token.token !== req.token
+
+        })
+        await req.user.save()
+        //res.send()
+        res.clearCookie("auth_token").redirect("/login")
+    }catch(error){
+        req.status(500).send()
+
+    }
+})
+
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try{
+        req.user.tokens = []
+
+        await req.user.save()
+
+        res.send()
+
+    }catch(error){ 
+        res.status(500).send()
+
+    }
+})
 
 
 

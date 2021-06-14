@@ -89,6 +89,17 @@ const userSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 
+userSchema.methods.toJSON = function () {
+    const user = this
+    const userObject = user.toObject() // fortæller appen at user nu er et object, hvor vi kan tilgå værdier
+
+    delete userObject.accountPassword // Fjerner accoutpassword fra at blive set i vores requests
+    delete userObject.tokens // fjerner tokens fra at blive set i vores request
+
+    return userObject
+}
+
+
 userSchema.methods.generateAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, 'JWTTokenGenerated')
