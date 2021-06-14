@@ -14,55 +14,26 @@ const path = require('path')
         await user.save()
         const token = await user.generateAuthToken()
         
-        
-        // res.status(201).send(user)
-        //res.status(201).send({user, token})
         res.redirect('/login')
         
 
     }catch(error){
-        res.status(400).send(error)
+        res.status(400).sendFile(path.resolve(__dirname,'..', 'public/views','errorPage.html'))
     }; 
 })
 
 
-// post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
-router.get('/user/one/:id', async (req, res) =>{
-    const _id = req.params.id
 
-    try{
-        const user = await User.findById(_id)
-        if(!user){
-            return res.status(404).send()
-        }
-
-        res.send(user)
-
-    }catch(error){
-        res.status(500).send()
-    };
-});
-
-
-// user find finder alle users.
+// user find finder min bruger .
 router.get("/users/me", auth, async (req, res) =>{
     res.send(req.user)
 });
 
-// router.get("/users/all", auth, async (req, res) =>{
-//     try{
-//         const users = await User.find({})
-//         res.send(users)
 
-//     }catch(error){
-//         res.status(500).send()
-//     };
-// });
-
-// path til at update in bruger
-router.patch('/users/update/:id', async (req, res) =>{
+// path til at update min bruger
+router.patch('/users/update/me', auth, async (req, res) =>{
     const updates = Object.keys(req.body)
-    const allowedUpdated = ['name','accountName', 'contactInfo', 'age', 'email', 'gender']
+    const allowedUpdated = ['name','accountName', 'contactInfo', 'age', 'email', 'gender','accountPassword']
     const isValidOperation = updates.every((update) => allowedUpdated.includes(update))
 
     if(!isValidOperation){
@@ -70,16 +41,12 @@ router.patch('/users/update/:id', async (req, res) =>{
     }
 
     try{
-        const user = await User.findById(req.params.id)
-        updates.forEach((update) => user[update] = req.body[update])
-        await user.save()
-        //const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true} )
+        
+        updates.forEach((update) => req.user[update] = req.body[update])
+        await req.user.save()
 
-        if(!user){
-            return res.status(404).send()
-        }
 
-        res.send(user)
+        res.send(req.user)
 
     } catch(error){
         res.status(400).send(error)
@@ -87,15 +54,14 @@ router.patch('/users/update/:id', async (req, res) =>{
 })
 
 
-// delete metode til at delete en bruger
-router.delete("/user/delete/:id", async (req,res) => {
+// delete metode til at delete min bruger
+router.delete("/user/delete/me",auth, async (req,res) => {
     try{
-        const user = await User.findByIdAndDelete(req.params.id)
-        if(!user){
-            return res.status(404).send()
-        }
 
-        res.send(user)
+
+        await req.user.remove()
+
+        res.send(req.user)
         console.log("User was deleted");
 
     }catch(error){
@@ -104,13 +70,13 @@ router.delete("/user/delete/:id", async (req,res) => {
     };
 })
 
-// post "login" metode der tager req body parametre og sammenligner med brugernavn samt passwo
+// post "login" metode der tager req body parametre og sammenligner med brugernavn samt password til at logge ind
 router.post('/users/login', async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.email, req.body.accountPassword)
         const token = await user.generateAuthToken()
         res.cookie('auth_token', token, { maxAge: 21600000 })
-        //res.send({user, token})
+        
         res.redirect("/")
         
         
@@ -120,7 +86,7 @@ router.post('/users/login', async (req, res) => {
 
     };
 });
-
+// logger en authenticated bruger ud
 router.post('/users/logout', auth, async (req, res) => {
     try{
         req.user.tokens = req.user.tokens.filter((token) =>{
@@ -128,14 +94,14 @@ router.post('/users/logout', auth, async (req, res) => {
 
         })
         await req.user.save()
-        //res.send()
+        
         res.clearCookie("auth_token").redirect("/login")
     }catch(error){
         req.status(500).send()
 
     }
 })
-
+//logger authenticated account ud fra alle devices med
 router.post('/users/logoutAll', auth, async (req, res) => {
     try{
         req.user.tokens = []
@@ -163,6 +129,36 @@ module.exports = {router};
 //     try{
 //         const users = await User.find({})
 //         res.send(users)
+
+//     }catch(error){
+//         res.status(500).send()
+//     };
+// });
+
+
+//Get all users is deprecated
+// router.get("/users/all", auth, async (req, res) =>{
+//     try{
+//         const users = await User.find({})
+//         res.send(users)
+
+//     }catch(error){
+//         res.status(500).send()
+//     };
+// });
+
+// post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
+//this route is deprecated but is still usable
+// router.get('/user/one/:id', async (req, res) =>{
+//     const _id = req.params.id
+
+//     try{
+//         const user = await User.findById(_id)
+//         if(!user){
+//             return res.status(404).send()
+//         }
+
+//         res.send(user)
 
 //     }catch(error){
 //         res.status(500).send()

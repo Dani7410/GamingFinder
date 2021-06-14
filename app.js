@@ -31,7 +31,7 @@ app.use(dbChannelRoute.router);
 
 
 
-// SSR
+// SerSsideRendring
 const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
 const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8");
