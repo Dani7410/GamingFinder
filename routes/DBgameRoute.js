@@ -1,103 +1,54 @@
 const router = require("express").Router();
 const Game = require("../models/game");
-//original 
 
-// mongoose and mongo sandbox routes. " test routes" // skal laves om til post med req. body parametre.
-router.get("/game/create", async (req, res) => {
-    const game = new Game({
-        // name: "Valorant",
-        // genre: "Shooter, FPS",
-        // minAge: "10",
-        // channelLink: "https://www.artbook.net/en/work-in-progress/#iLightbox[gallery4319]/0",
-        // image: "https://static-cdn.jtvnw.net/ttv-boxart/VALORANT-285x380.jpg",
-        // multiplayer: true,
-        // playerVsPlayer: true,
-        // rolePlayingGame: false,
-        // shooter: true,
-        // massiveMultiplayerOnlineRoleplayingGame: false
-    });
-    
-    // dette er også async, og det tager en lille smule tid at udføre, derfor retunere det et "promise"
-    // derfor er der muligt at tilføje en .then() method
-    game.save()
-    // når data er gemt så sendes result i response body
-    .then((result) => {
-        res.send(result);
-    })// hvis game modellen ikke bliver oprettet så sendes console logger vi error
-    .catch((error) => {
-        console.log(error);
-    });
-});
 
-// kald på alle games.
-// router.get("/api/games", async (req, res) => {
-
-//     try{
-//     const games = await Game.find({})
-//     res.send(games)
-
-//     }catch(error){
-//         res.status(500).send()
-//     };
-// });
 
 // kald på alle games.
 router.get("/api/games", async (req, res) => {
     // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
-    // original
-    Game.find()
+   await Game.find()
         .then((result) => {
           res.send({result});
         })
         .catch((error) => {
           console.log(error);
-        });
-    // Kigge på dette 
-
+        }); 
 });
 
+
 // Get kald med id parameter
-router.get('/game/:id', (req, res) =>{
-
+router.get('/game/:id', async (req, res) =>{
     const _id = req.params.id
-
-    Game.findById(_id)
-    .then((result) =>{
-        
+    const result = await Game.findById(_id)
+   
+    try{
         if(!result) 
         {
             console.log('the game was not found');
             return res.status(404).send('the game was not found')
         }
+            res.send(result)
+            console.log('the game was found');
 
-        res.send(result)
-        console.log('the game was found');
-
-    }).catch((error) =>{
-
-        console.log(error);
-        res.status(500).send()
-    });    
+    } catch(error){
+        res.status(500).sendFile(path.resolve(__dirname,'..', 'public/views','errorPage.html'))
+    };    
 })
+
 
 // Api kald til oprettelse af game
 router.post("/game/create", async (req, res) => {
-
-        const game = new Game(req.body)
+    const game = new Game(req.body)
 
     try{
         await game.save()
-        // const token = await user.generateAuthToken()
-        
-        // res.status(201).send(user)
         res.status(201).send(game)
-        //res.redirect('/')
         
-
     }catch(error){
         res.status(400).send(error)
     }; 
 })
+
 
 // patch/ update route
 router.patch("/game/update/:id", async (req, res) =>{
@@ -120,6 +71,7 @@ router.patch("/game/update/:id", async (req, res) =>{
         res.status(400).send()
     }
 })
+
 
 // delete
 router.delete("/game/delete/:id", async (req,res) => {

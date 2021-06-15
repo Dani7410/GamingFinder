@@ -16,12 +16,10 @@ const path = require('path')
         
         res.redirect('/login')
         
-
     }catch(error){
         res.status(400).sendFile(path.resolve(__dirname,'..', 'public/views','errorPage.html'))
     }; 
 })
-
 
 
 // user find finder min bruger .
@@ -57,7 +55,6 @@ router.patch('/users/update/me', auth, async (req, res) =>{
 // delete metode til at delete min bruger
 router.delete("/user/delete/me",auth, async (req,res) => {
     try{
-
 
         await req.user.remove()
 
