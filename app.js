@@ -38,6 +38,7 @@ const footer = fs.readFileSync(__dirname + "/public/footer/footer.html", "utf-8"
 const landingpage = fs.readFileSync(__dirname + "/public/landingPage/landingPage.html", "utf-8");
 const userCreate = fs.readFileSync(__dirname + "/public/userCreate/userCreate.html", "utf-8");
 const channel = fs.readFileSync(__dirname + "/public/channel/channel.html", "utf-8");
+const profile = fs.readFileSync(__dirname + "/public/profile/profile.html","utf-8");
 
 
 //Html Routes
@@ -52,6 +53,10 @@ app.get("/login", (req, res) => {
 
 app.get("/user/create", (req, res) => {
     res.send(userCreate)
+});
+
+app.get("/profile/me", authentication, (req, res) =>{
+    res.send(header + profile + footer)
 });
 
 app.get("/channel12/:id", (req, res) => {

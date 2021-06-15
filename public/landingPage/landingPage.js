@@ -1,9 +1,7 @@
 
 
 // simpelt test script.
-$(document).ready(function() {
-    console.log("test from landingpage js script");
-})
+
 
 // Get / Read all games.
 
@@ -27,8 +25,8 @@ $(function() {
                resultsToApply += cardCounter=== 0? '<tr>': "";
                resultsToApply +=
                '<td>'+
-                '<a  href='+ game.channelLink +''+
-                  '<div class="card h-100  >'+
+                '<a  href="'+ game.channelLink +'"'+
+                  '<div class="card h-100>"'+
                     '<div class="card-body">'+
                      '<img src="' + game.image + '"class="card-img-top" alt="..."></img>'+
                      '<h5 class="card-title">'+ game.name +' </h5>'+
@@ -39,7 +37,7 @@ $(function() {
                  '</a>'+
                '</td>'
               ;
-                console.log(cardCounter);
+                
                 resultsToApply += (cardCounter === 3) ? "</tr>": "";
                 
                 cardCounter++
@@ -47,8 +45,8 @@ $(function() {
                   cardCounter = 0;
                 }
              });
-           // $('#gameTable').append(resultsToApply);
-            document.getElementById("gameTable").innerHTML=resultsToApply;
+            $('#gameTable').append(resultsToApply);
+            //document.getElementById("gameTable").innerHTML=resultsToApply;
             // gameTableEL.innerHTML = resultsToApply
             }
     });

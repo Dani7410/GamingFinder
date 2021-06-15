@@ -1,0 +1,59 @@
+<div id="profileCard">
+<div class="card mb-3" style="max-width: 540px;" >
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="../images/2698175.png" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" id="profileName"></h5>
+          <p class="card-text" id="email"></p>
+          <p class="card-text" id="age"></p>
+          <p class="card-text" id="accountName"></p>
+          <p class="card-text" id="gender"></p>
+          <tr>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal" >Edit</button>
+            <a href="/login"><button type="button" class="btn btn-danger" onclick="deleteProfile()">Delete</button></a>
+          </tr>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+
+
+
+
+<!-- modal for updating profile -->
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="/users/update/me" method="POST">
+
+            <div class="modal-body" id="editModalBody">
+                
+                <input type="text" id="profileName" name="name" placeholder="Name"><br>
+                <input type="text" id="AccountName" name="accountName" placeholder="Account name" ><br> 
+                <input type="text" id="Contact" name="contactInfo" placeholder="Contact Info"><br> 
+                <input type="number" id="Age" name="age" placeholder="Age" ><br>
+                <input type="email" id="Email" name="email" placeholder="Email" ><br>
+                <input type="text" id="Gender" name="gender" placeholder="Gender"><br>
+                
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" class="submit" value="Create user" onclick="" ><br>
+            </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
