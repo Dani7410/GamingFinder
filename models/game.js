@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-const gameSchema = new Schema({
+
+const gameSchema = new mongoose.Schema({
     // by "opening" up the json object we can modify the properties insted of just {name: susan}
     name: {
         type: String,
@@ -44,6 +44,14 @@ const gameSchema = new Schema({
         
     }
 }, {timestamps: true});
+
+gameSchema.methods.toJSON = function () {
+    const game = this
+    const gameObject = game.toObject() // fortæller appen at user nu er et object, hvor vi kan tilgå værdier
     
-    const Game = mongoose.model("Game", gameSchema);
-    module.exports = Game;
+    return gameObject
+}
+
+    
+const Game = mongoose.model("Game", gameSchema);
+module.exports = Game;

@@ -27,19 +27,19 @@ $(function() {
                resultsToApply += cardCounter=== 0? '<tr>': "";
                resultsToApply +=
                '<td>'+
-               '<a " href='+ game.channelLink +''+
-               '<div class="card h-100" padding="12px" style="margin-right: 12px; margin-left: 12px; margin-top: 12px; margin-bottom : 12 px;  >'+
-                 '<div class="card-body">'+
-                 '<img src="' + game.image + '"class="card-img-top" alt="..."></img>'+
-                   '<h5 class="card-title">'+ game.name +' </h5>'+
-                   '<p class="card-text"> Minimum age: '+ game.minAge +' </p>'+
-                   '<p class="card-text"> PlayerVsPlayer: '+ game.playerVsPlayer +'</p>'+ 
-                 '</div>'+
-               '</div>'+
-               '</a>'+
-             '</td>'
-                 ;
-                 console.log(cardCounter);
+                '<a  href='+ game.channelLink +''+
+                  '<div class="card h-100  >'+
+                    '<div class="card-body">'+
+                     '<img src="' + game.image + '"class="card-img-top" alt="..."></img>'+
+                     '<h5 class="card-title">'+ game.name +' </h5>'+
+                     '<p class="card-text"> Minimum age: '+ game.minAge +' </p>'+
+                     '<p class="card-text"> PlayerVsPlayer: '+ game.playerVsPlayer +'</p>'+ 
+                    '</div>'+
+                  '</div>'+
+                 '</a>'+
+               '</td>'
+              ;
+                console.log(cardCounter);
                 resultsToApply += (cardCounter === 3) ? "</tr>": "";
                 
                 cardCounter++

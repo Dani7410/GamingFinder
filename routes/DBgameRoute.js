@@ -30,16 +30,16 @@ router.get("/game/create", async (req, res) => {
 });
 
 // kald på alle games.
-router.get("/games", (req, res) => {
-    // denne async find() metode på Game model finder: alle documenterne indeni game modeller i databasen 
-    Game.find()
-        .then((result) => {
-          res.send(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-});
+// router.get("/api/games", async (req, res) => {
+
+//     try{
+//     const games = await Game.find({})
+//     res.send(games)
+
+//     }catch(error){
+//         res.status(500).send()
+//     };
+// });
 
 // kald på alle games.
 router.get("/api/games", async (req, res) => {
@@ -90,7 +90,7 @@ router.post("/game/create", async (req, res) => {
         // const token = await user.generateAuthToken()
         
         // res.status(201).send(user)
-        res.status(201).send({game})
+        res.status(201).send(game)
         //res.redirect('/')
         
 
