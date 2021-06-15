@@ -43,7 +43,7 @@ $(function() {
                 resultsToApply += (cardCounter === 3) ? "</tr>": "";
                 
                 cardCounter++
-                if(cardCounter > 2){
+                if(cardCounter > 3){
                   cardCounter = 0;
                 }
              });
