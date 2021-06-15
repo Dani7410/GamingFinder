@@ -29,7 +29,7 @@ router.get("/users/me", auth, async (req, res) =>{
 
 
 // path til at update min bruger
-router.patch('/users/update/me', auth, async (req, res) =>{
+router.post('/users/update/me', auth, async (req, res) =>{
     const updates = Object.keys(req.body)
     const allowedUpdated = ['name','accountName', 'contactInfo', 'age', 'email', 'gender','accountPassword']
     const isValidOperation = updates.every((update) => allowedUpdated.includes(update))
@@ -41,10 +41,11 @@ router.patch('/users/update/me', auth, async (req, res) =>{
     try{
         
         updates.forEach((update) => req.user[update] = req.body[update])
+
         await req.user.save()
 
 
-        res.send(req.user)
+        res.redirect("/profile/me")
 
     } catch(error){
         res.status(400).send(error)
