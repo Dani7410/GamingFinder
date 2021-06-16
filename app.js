@@ -20,8 +20,6 @@ const dbGameRoute = require("./routes/DBgameRoute");
 const dbChannelRoute = require("./routes/DBchannelRoute");
 
 
-
-
 //App use middleware
 app.use(express.json());
 app.use(express.static("public"));
@@ -35,7 +33,6 @@ app.use(dbGameRoute.router);
 app.use(dbChannelRoute.router);
 
 
-
 // SerSsideRendring
 const login = fs.readFileSync(__dirname + "/public/login/login.html", "utf-8");
 const header = fs.readFileSync(__dirname + "/public/header/header.html", "utf-8");
@@ -47,7 +44,6 @@ const profile = fs.readFileSync(__dirname + "/public/profile/profile.html","utf-
 
 
 //Html Routes
-
 app.get("/", authentication, (req, res) => {
     res.send(header + landingpage + footer)
 });
@@ -67,6 +63,7 @@ app.get("/profile/me", authentication, (req, res) =>{
 app.get("/channelView/:id", authentication, (req, res) => {
     res.send(channel)
 });
+
 
 io.on('connection', (socket) =>{
     console.log('New websocket connection')
@@ -94,11 +91,8 @@ io.on('connection', (socket) =>{
     socket.on('disconnect', () =>{
         io.emit('message', 'A user has left')
     })
-
-
-   
-
 })
+
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT, error => {

@@ -49,7 +49,7 @@ router.post("/game/create", async (req, res) => {
     }; 
 })
 
-// denne metode mangler rettelser da game har fået flere attrubutter.
+
 // patch/ update route
 router.patch("/game/update/:id", async (req, res) =>{
     const updatesData = Object.keys(req.body)
@@ -88,5 +88,7 @@ router.delete("/game/delete/:id", async (req,res) => {
 
     }
 })
+
+
 
 module.exports = {router}

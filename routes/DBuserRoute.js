@@ -5,8 +5,6 @@ const path = require('path');
 const { update } = require("../models/user");
 
 
-
-
 // API  kald til oprettelse af user 
  router.post("/user/create", async (req, res) => {
     const user = new User(req.body)
@@ -22,12 +20,10 @@ const { update } = require("../models/user");
     }; 
 })
 
-
 // API get find finder min bruger .
 router.get("/users/me", auth, async (req, res) =>{
     res.send(req.user)
 });
-
 
 // path til at update min bruger
 router.post('/users/update/me', auth, async (req, res) =>{
@@ -76,7 +72,6 @@ router.post('/users/update/me', auth, async (req, res) =>{
     };
 })
 
-
 // delete metode til at delete min bruger
 router.delete("/user/delete/me",auth, async (req,res) => {
     try{
@@ -107,6 +102,7 @@ router.post('/users/login', async (req, res) => {
 
     };
 });
+
 // logger en authenticated bruger ud
 router.post('/users/logout', auth, async (req, res) => {
     try{
@@ -122,6 +118,7 @@ router.post('/users/logout', auth, async (req, res) => {
 
     }
 })
+
 //logger authenticated account ud fra alle devices med
 router.post('/users/logoutAll', auth, async (req, res) => {
     try{
@@ -136,7 +133,6 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 
     }
 })
-
 
 
 module.exports = {router};
