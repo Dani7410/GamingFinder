@@ -20,12 +20,12 @@ $(function() {
              response.result.forEach(function(game) {
                
              
-
+              // '+ game.channelLink +'
                // hvis cardCounter er 1 så bruges flex justify content start eller tom strng" intet"
                resultsToApply += cardCounter=== 0? '<tr>': "";
                resultsToApply +=
                '<td>'+
-                '<a  href="'+ game.channelLink +'"'+
+                '<a  href="/channelView/:id"'+ game.channelLink +
                   '<div class="card h-100>"'+
                     '<div class="card-body">'+
                      '<img src="' + game.image + '"class="card-img-top" alt="..."></img>'+
