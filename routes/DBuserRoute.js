@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/user");
 const auth = require('../Middleware/auth');
-const path = require('path')
+const path = require('path');
+const { update } = require("../models/user");
 
 
 
@@ -33,17 +34,40 @@ router.post('/users/update/me', auth, async (req, res) =>{
     const updates = Object.keys(req.body)
     const allowedUpdated = ['name','accountName', 'contactInfo', 'age', 'email', 'gender','accountPassword']
     const isValidOperation = updates.every((update) => allowedUpdated.includes(update))
-
-    if(!isValidOperation){
+    
+    if(!isValidOperation ){
         return res.status(400).send({ error: 'invalid updates!' })
     }
-
+    
     try{
-        
+        const user = await User.findById(req.user)
+
         updates.forEach((update) => req.user[update] = req.body[update])
+        
+        // her laves check på om post request body variabler indeholder tom string / ingen data. og hvis de gør brug allerede
+        // oprettet data fra user.findById metodekald. "hvis ingen data. indsæt data der findes allerede."
+        if(req.user.name == ""){
+            req.user.name = user.name
+        }
+        if(req.user.accountName == ""){
+            req.user.accountName = user.accountName
+        }
+        if(req.user.contactInfo == ""){
+            req.user.contactInfo = user.contactInfo
+        }
+        // ved age checker der kun for forkerte værdier og intet sker hvis der rammes en værdi der ikke må bruges. da
+        // findById metodekaldet's variabel værdi bliver andvendt. "hvis forkert eller ingen værdi, brug den allerede gemte værdi."
+        if(req.body.age <18 || req.body.age >= 100 || req.body.age == "" || req.body.age == null){
+            req.user.age = user.age
+        }   
+        if(req.user.email == ""){
+            req.user.email = user.email
+        }
+        if(req.user.gender == ""){
+            req.user.gender = user.gender
+        }
 
         await req.user.save()
-
 
         res.redirect("/profile/me")
 
@@ -76,7 +100,6 @@ router.post('/users/login', async (req, res) => {
         res.cookie('auth_token', token, { maxAge: 21600000 })
         
         res.redirect("/")
-        
         
 
     }catch(error){
