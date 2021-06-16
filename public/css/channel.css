@@ -1,0 +1,55 @@
+
+body{
+    background: linear-gradient(to left, rgb(62, 142, 167), rgb(192, 192, 230));
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 450px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px 20px rgba(0,0,0,0.4);
+    background-image: linear-gradient(125deg,#603F83FF,#C7D3D4FF);
+}
+
+.header h1{
+    color: aliceblue;
+    padding: 15px;
+}
+
+.chatbox{
+    flex: 1;
+    color: white;
+    padding: 20px 30px;
+    background-color: #2C3A47;
+    /* padding: 10px;
+	margin-bottom: 15px;
+	background-color: var(--light-color);
+	border-radius: 5px; */
+    
+}
+
+.mymessage{
+    background-color: dodgerblue;
+    padding: 10px;
+    color: white;
+    width: fit-content;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    /* padding: 10px;
+	margin-bottom: 15px;
+	background-color: var(--light-color);
+	border-radius: 5px; */
+}
+

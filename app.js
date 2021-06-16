@@ -1,4 +1,7 @@
+const http = require('http')
 const express = require("express");
+const socketio = require('socket.io')
+const Filter = require('bad-words')
 const cookieParser = require("cookie-parser")
 const fs = require("fs");
 const authentication = require("./Middleware/auth")
@@ -7,6 +10,8 @@ require('./db/mongooseDB');
 
 
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server)
 
 
 //Import with require to get our route
@@ -59,15 +64,50 @@ app.get("/profile/me", authentication, (req, res) =>{
     res.send(header + profile + footer)
 });
 
-app.get("/channelView/:id", (req, res) => {
-    res.send(header + channel + footer)
+app.get("/channelView", (req, res) => {
+    res.send(channel)
 });
 
 
 
 
+io.on('connection', (socket) =>{
+    console.log('New websocket connection')
+    
+    socket.emit('message', 'Welcome!')
+
+    socket.broadcast.emit('message', 'A new user has joined')
+
+    socket.on('sendMessage', (message, callback) =>{
+        const filter = new Filter()
+
+        if(filter.isProfane(message)){
+            return callback('Profanity is now allowed!')
+        }
+
+        io.emit('message', message)
+        callback()
+    })
+
+
+    socket.on('sendLocation', (coords, callback) =>{
+        io.emit('message', `http://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+        callback()
+    })
+
+    socket.on('disconnect', () =>{
+        io.emit('message', 'A user has left')
+    })
+
+
+   
+
+})
+
+
+
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, error => {
+server.listen(PORT, error => {
     if(error){
         console.log(error);
     }
