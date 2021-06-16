@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
 
-    // by "opening" up the json object we can modify the properties insted of just {name: susan}
+    
     name: {
         type: String,
         required: true,  // required so wont be able to create/post without this value.
@@ -63,28 +63,6 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     }]
-    // userType: {
-    //     type: String,
-        
-    // },
-    // // er de offline eller online ?
-    // onlineState: {
-    //     type: Boolean,
-        
-    // },
-    // // evt denne hvor man kan se hvilke spil brugeren spiller mest.
-    // mostPlayedGame: {
-    //     type: String,
-        
-    // },
-    // recentlyPlayedWith: {
-    //     type: String,
-        
-    // },
-    // friends: {
-    //     type: String,
-        
-    // }
 }, {timestamps: true});
 
 

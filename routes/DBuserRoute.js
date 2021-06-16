@@ -23,7 +23,7 @@ const { update } = require("../models/user");
 })
 
 
-// user find finder min bruger .
+// API get find finder min bruger .
 router.get("/users/me", auth, async (req, res) =>{
     res.send(req.user)
 });
@@ -56,7 +56,7 @@ router.post('/users/update/me', auth, async (req, res) =>{
             req.user.contactInfo = user.contactInfo
         }
         // ved age checker der kun for forkerte værdier og intet sker hvis der rammes en værdi der ikke må bruges. da
-        // findById metodekaldet's variabel værdi bliver andvendt. "hvis forkert eller ingen værdi, brug den allerede gemte værdi."
+        // findById metodekaldet's variabel værdi bliver anvendt. "hvis forkert eller ingen værdi, brug den allerede gemte værdi."
         if(req.body.age <18 || req.body.age >= 100 || req.body.age == "" || req.body.age == null){
             req.user.age = user.age
         }   
@@ -140,48 +140,3 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 
 
 module.exports = {router};
-
-//Former router method which gets all user without authentication..
-//since we dont wanne expose data to all users, we have created a middleware function which authenticates an 
-//user before we can access the data. In that case its all done by a token.
-//That means that the get all users function is deprecated. And now we can only return one user with the 
-// right authentication. That way users have no way of seeing data on other users, beside them selves.
-// router.get("/users/all", auth, async (req, res) =>{
-//     try{
-//         const users = await User.find({})
-//         res.send(users)
-
-//     }catch(error){
-//         res.status(500).send()
-//     };
-// });
-
-
-//Get all users is deprecated
-// router.get("/users/all", auth, async (req, res) =>{
-//     try{
-//         const users = await User.find({})
-//         res.send(users)
-
-//     }catch(error){
-//         res.status(500).send()
-//     };
-// });
-
-// post "login" metode der tager req body parametre og sammenligner med brugernavn samt password
-//this route is deprecated but is still usable
-// router.get('/user/one/:id', async (req, res) =>{
-//     const _id = req.params.id
-
-//     try{
-//         const user = await User.findById(_id)
-//         if(!user){
-//             return res.status(404).send()
-//         }
-
-//         res.send(user)
-
-//     }catch(error){
-//         res.status(500).send()
-//     };
-// });

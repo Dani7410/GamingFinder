@@ -15,7 +15,7 @@ router.get("/channel/:id", async (req, res) =>{
             return res.sendStatus(404).send("the channel was not found")
         }
 
-        res.send(result)
+        res.redirect("/channelView")
         console.log("the channel was found");
     }).catch((error) =>{
         console.log(error)
