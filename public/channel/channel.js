@@ -8,7 +8,7 @@ $(document).ready(function() {
 $(function() {
     $.ajax({
         // ved ikke helt hvordan vi skal tilføje dette channel id. evt link href function i game card. med channel ref.
-        url: "/channel/60af98c66e431127c026e14e",
+        url: "/channel/:id",
         contentType:"application/json" ,
         success: function(response) {
            let resultsToApply = "";
@@ -35,7 +35,8 @@ $(function() {
         '</article>'
            ;
          
-           document.getElementById("channelTable").innerHTML=resultsToApply;
+           //document.getElementById("channelTable").innerHTML=resultsToApply;
+             $('#channelTable').append(resultsToApply);
         }
         }
     );

@@ -59,7 +59,7 @@ app.get("/profile/me", authentication, (req, res) =>{
     res.send(header + profile + footer)
 });
 
-app.get("/channel12/:id", (req, res) => {
+app.get("/channelView/:id", (req, res) => {
     res.send(header + channel + footer)
 });
 
