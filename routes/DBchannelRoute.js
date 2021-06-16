@@ -4,10 +4,10 @@ const Channel = require("../models/channel");
 
 
 // get på channel id.
-router.get("/channel/:id", (req, res) =>{
+router.get("/channel/:id", async (req, res) =>{
     const _id = req.params.id
 
-    Channel.findById(_id)
+    await Channel.findById(_id)
     .then((result) =>{
 
         if(!result) {
